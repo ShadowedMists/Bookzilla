@@ -1,0 +1,10 @@
+/packages
+/Bookzilla.Web/bin
+/Bookzilla.Web/obj
+/Bookzilla.Web/Bookzilla.Web.csproj.user
+/Bookzilla.Schema/Bookzilla.Schema.sqlproj.user
+/Bookzilla.Schema/obj
+/Bookzilla.Schema/bin
+/Bookzilla.Database/bin
+/Bookzilla.Database/obj
+/.vs

@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookzilla.Web", "Bookzilla.Web\Bookzilla.Web.csproj", "{D9481A08-C398-43B4-B025-356091201E08}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Bookzilla.Schema", "Bookzilla.Schema\Bookzilla.Schema.sqlproj", "{41349AEB-A7E1-4536-97B3-C95A9BE5EECC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookzilla.Database", "Bookzilla.Database\Bookzilla.Database.csproj", "{0CAFBFE4-2D60-409C-9EE3-BAE903A3659E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9481A08-C398-43B4-B025-356091201E08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9481A08-C398-43B4-B025-356091201E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9481A08-C398-43B4-B025-356091201E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9481A08-C398-43B4-B025-356091201E08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41349AEB-A7E1-4536-97B3-C95A9BE5EECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41349AEB-A7E1-4536-97B3-C95A9BE5EECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41349AEB-A7E1-4536-97B3-C95A9BE5EECC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{41349AEB-A7E1-4536-97B3-C95A9BE5EECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41349AEB-A7E1-4536-97B3-C95A9BE5EECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41349AEB-A7E1-4536-97B3-C95A9BE5EECC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0CAFBFE4-2D60-409C-9EE3-BAE903A3659E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CAFBFE4-2D60-409C-9EE3-BAE903A3659E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CAFBFE4-2D60-409C-9EE3-BAE903A3659E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CAFBFE4-2D60-409C-9EE3-BAE903A3659E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35180201-24C1-4C5C-9DC9-05CC624702E3}
+	EndGlobalSection
+EndGlobal

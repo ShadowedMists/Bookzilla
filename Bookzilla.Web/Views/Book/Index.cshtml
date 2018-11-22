@@ -1,0 +1,46 @@
+﻿@model Bookzilla.Models.BookListModel
+
+@{
+    ViewBag.Title = "All Books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Release Date</th>
+            <th>ISBN</th>
+            <th>
+                <a href="@Url.Action("Create")" class="btn btn-sm btn-secondary">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+            <tr>
+                <td>@book.BOOK_TITLE</td>
+                <td>@book.AUTHOR_DISPLAY_NAME</td>
+                <td>@(book.BOOK_RELEASE_DATE.HasValue ? book.BOOK_RELEASE_DATE.Value.ToShortDateString() : null)</td>
+                <td>@book.BOOK_ISBN</td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a href="@Url.Action("Edit", new { id = book.BOOK_ID})" class="btn btn-secondary">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="@Url.Action("Delete", new { id = book.BOOK_ID})" class="btn btn-outline-danger">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

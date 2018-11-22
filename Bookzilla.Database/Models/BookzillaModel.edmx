@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BookzillaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="AUTHOR_ID" />
+          </Key>
+          <Property Name="AUTHOR_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AUTHOR_DISPLAY_NAME" Type="nvarchar" MaxLength="2048" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BOOK_ID" />
+          </Key>
+          <Property Name="BOOK_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AUTHOR_ID" Type="bigint" Nullable="false" />
+          <Property Name="BOOK_TITLE" Type="nvarchar" MaxLength="2048" Nullable="false" />
+          <Property Name="BOOK_SUMMARY" Type="nvarchar(max)" />
+          <Property Name="BOOK_TOTAL_PAGES" Type="int" />
+          <Property Name="BOOK_RELEASE_DATE" Type="date" />
+          <Property Name="BOOK_ISBN" Type="nvarchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="BOOK_ID" />
+          </Key>
+          <Property Name="BOOK_ID" Type="bigint" Nullable="false" />
+          <Property Name="QUANTITY_IN_STOCK" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Bookzilla.dbo.v_BookDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_BookDetail">
+          <Key>
+            <PropertyRef Name="BOOK_ID" />
+            <PropertyRef Name="BOOK_TITLE" />
+          </Key>
+          <Property Name="BOOK_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BOOK_TITLE" Type="nvarchar" MaxLength="2048" Nullable="false" />
+          <Property Name="BOOK_SUMMARY" Type="nvarchar(max)" />
+          <Property Name="BOOK_TOTAL_PAGES" Type="int" />
+          <Property Name="BOOK_RELEASE_DATE" Type="date" />
+          <Property Name="BOOK_ISBN" Type="nvarchar" MaxLength="32" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Bookzilla.dbo.v_BookSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_BookSummary">
+          <Key>
+            <PropertyRef Name="BOOK_ID" />
+            <PropertyRef Name="BOOK_TITLE" />
+            <PropertyRef Name="AUTHOR_ID" />
+            <PropertyRef Name="AUTHOR_DISPLAY_NAME" />
+          </Key>
+          <Property Name="BOOK_ID" Type="bigint" Nullable="false" />
+          <Property Name="BOOK_TITLE" Type="nvarchar" MaxLength="2048" Nullable="false" />
+          <Property Name="AUTHOR_ID" Type="bigint" Nullable="false" />
+          <Property Name="AUTHOR_DISPLAY_NAME" Type="nvarchar" MaxLength="2048" Nullable="false" />
+          <Property Name="BOOK_RELEASE_DATE" Type="date" />
+          <Property Name="BOOK_ISBN" Type="nvarchar" MaxLength="32" />
+        </EntityType>
+        <Association Name="FK_Book_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="AUTHOR_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="AUTHOR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BOOK_ID" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="BOOK_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="p_BookSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SEARCH_TEXT" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="p_BookUpdateInventory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BOOK_ID" Type="bigint" Mode="In" />
+          <Parameter Name="QUANTITY_IN_STOCK" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="BookzillaModelStoreContainer">
+          <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_BookDetail" EntityType="Self.v_BookDetail" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_BookDetail].[BOOK_ID] AS [BOOK_ID], 
+    [v_BookDetail].[BOOK_TITLE] AS [BOOK_TITLE], 
+    [v_BookDetail].[BOOK_SUMMARY] AS [BOOK_SUMMARY], 
+    [v_BookDetail].[BOOK_TOTAL_PAGES] AS [BOOK_TOTAL_PAGES], 
+    [v_BookDetail].[BOOK_RELEASE_DATE] AS [BOOK_RELEASE_DATE], 
+    [v_BookDetail].[BOOK_ISBN] AS [BOOK_ISBN]
+    FROM [dbo].[v_BookDetail] AS [v_BookDetail]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_BookSummary" EntityType="Self.v_BookSummary" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_BookSummary].[BOOK_ID] AS [BOOK_ID], 
+    [v_BookSummary].[BOOK_TITLE] AS [BOOK_TITLE], 
+    [v_BookSummary].[AUTHOR_ID] AS [AUTHOR_ID], 
+    [v_BookSummary].[AUTHOR_DISPLAY_NAME] AS [AUTHOR_DISPLAY_NAME], 
+    [v_BookSummary].[BOOK_RELEASE_DATE] AS [BOOK_RELEASE_DATE], 
+    [v_BookSummary].[BOOK_ISBN] AS [BOOK_ISBN]
+    FROM [dbo].[v_BookSummary] AS [v_BookSummary]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Book_Author" Association="Self.FK_Book_Author">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Book" Association="Self.FK_Inventory_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookzillaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="AUTHOR_ID" />
+          </Key>
+          <Property Name="AUTHOR_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AUTHOR_DISPLAY_NAME" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Book_Author" FromRole="Author" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BOOK_ID" />
+          </Key>
+          <Property Name="BOOK_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AUTHOR_ID" Type="Int64" Nullable="false" />
+          <Property Name="BOOK_TITLE" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BOOK_SUMMARY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BOOK_TOTAL_PAGES" Type="Int32" />
+          <Property Name="BOOK_RELEASE_DATE" Type="DateTime" Precision="0" />
+          <Property Name="BOOK_ISBN" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Author" Relationship="Self.FK_Book_Author" FromRole="Book" ToRole="Author" />
+          <NavigationProperty Name="Inventory" Relationship="BookzillaModel.FK_Inventory_Book" FromRole="Book" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="v_BookDetail">
+          <Key>
+            <PropertyRef Name="BOOK_ID" />
+            <PropertyRef Name="BOOK_TITLE" />
+          </Key>
+          <Property Name="BOOK_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BOOK_TITLE" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BOOK_SUMMARY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BOOK_TOTAL_PAGES" Type="Int32" />
+          <Property Name="BOOK_RELEASE_DATE" Type="DateTime" Precision="0" />
+          <Property Name="BOOK_ISBN" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="v_BookSummary">
+          <Key>
+            <PropertyRef Name="BOOK_ID" />
+            <PropertyRef Name="BOOK_TITLE" />
+            <PropertyRef Name="AUTHOR_ID" />
+            <PropertyRef Name="AUTHOR_DISPLAY_NAME" />
+          </Key>
+          <Property Name="BOOK_ID" Type="Int64" Nullable="false" />
+          <Property Name="BOOK_TITLE" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AUTHOR_ID" Type="Int64" Nullable="false" />
+          <Property Name="AUTHOR_DISPLAY_NAME" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BOOK_RELEASE_DATE" Type="DateTime" Precision="0" />
+          <Property Name="BOOK_ISBN" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Book_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="AUTHOR_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="AUTHOR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookzillaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authors" EntityType="Self.Author" />
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="v_BookDetail" EntityType="Self.v_BookDetail" />
+          <EntitySet Name="v_BookSummary" EntityType="Self.v_BookSummary" />
+          <AssociationSet Name="FK_Book_Author" Association="Self.FK_Book_Author">
+            <End Role="Author" EntitySet="Authors" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <EntitySet Name="Inventories" EntityType="BookzillaModel.Inventory" />
+          <AssociationSet Name="FK_Inventory_Book" Association="BookzillaModel.FK_Inventory_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <FunctionImport Name="p_BookUpdateInventory">
+            <Parameter Name="BOOK_ID" Mode="In" Type="Int64" />
+            <Parameter Name="QUANTITY_IN_STOCK" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="p_BookSearch" ReturnType="Collection(BookzillaModel.p_BookSearch_Result)">
+            <Parameter Name="SEARCH_TEXT" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="BOOK_ID" />
+          </Key>
+          <Property Name="BOOK_ID" Type="Int64" Nullable="false" />
+          <Property Name="QUANTITY_IN_STOCK" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="BookzillaModel.FK_Inventory_Book" FromRole="Inventory" ToRole="Book" />
+        </EntityType>
+        <Association Name="FK_Inventory_Book">
+          <End Type="BookzillaModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="BookzillaModel.Inventory" Role="Inventory" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BOOK_ID" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="BOOK_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="p_BookSearch_Result">
+          <Property Type="Int64" Name="BOOK_ID" Nullable="false" />
+          <Property Type="Int64" Name="AUTHOR_ID" Nullable="false" />
+          <Property Type="String" Name="AUTHOR_DISPLAY_NAME" Nullable="false" MaxLength="2048" />
+          <Property Type="String" Name="BOOK_TITLE" Nullable="false" MaxLength="2048" />
+          <Property Type="Int32" Name="BOOK_TOTAL_PAGES" Nullable="true" />
+          <Property Type="DateTime" Name="BOOK_RELEASE_DATE" Nullable="true" />
+          <Property Type="String" Name="BOOK_ISBN" Nullable="true" MaxLength="32" />
+          <Property Type="Int32" Name="QUANTITY_IN_STOCK" Nullable="false" />
+          <Property Type="String" Name="BOOK_SUMMARY" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookzillaModelStoreContainer" CdmEntityContainer="BookzillaEntities">
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="BookzillaModel.Author">
+              <MappingFragment StoreEntitySet="Author">
+                <ScalarProperty Name="AUTHOR_ID" ColumnName="AUTHOR_ID" />
+                <ScalarProperty Name="AUTHOR_DISPLAY_NAME" ColumnName="AUTHOR_DISPLAY_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="BookzillaModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="BOOK_ID" ColumnName="BOOK_ID" />
+                <ScalarProperty Name="AUTHOR_ID" ColumnName="AUTHOR_ID" />
+                <ScalarProperty Name="BOOK_TITLE" ColumnName="BOOK_TITLE" />
+                <ScalarProperty Name="BOOK_SUMMARY" ColumnName="BOOK_SUMMARY" />
+                <ScalarProperty Name="BOOK_TOTAL_PAGES" ColumnName="BOOK_TOTAL_PAGES" />
+                <ScalarProperty Name="BOOK_RELEASE_DATE" ColumnName="BOOK_RELEASE_DATE" />
+                <ScalarProperty Name="BOOK_ISBN" ColumnName="BOOK_ISBN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_BookDetail">
+            <EntityTypeMapping TypeName="BookzillaModel.v_BookDetail">
+              <MappingFragment StoreEntitySet="v_BookDetail">
+                <ScalarProperty Name="BOOK_ID" ColumnName="BOOK_ID" />
+                <ScalarProperty Name="BOOK_TITLE" ColumnName="BOOK_TITLE" />
+                <ScalarProperty Name="BOOK_SUMMARY" ColumnName="BOOK_SUMMARY" />
+                <ScalarProperty Name="BOOK_TOTAL_PAGES" ColumnName="BOOK_TOTAL_PAGES" />
+                <ScalarProperty Name="BOOK_RELEASE_DATE" ColumnName="BOOK_RELEASE_DATE" />
+                <ScalarProperty Name="BOOK_ISBN" ColumnName="BOOK_ISBN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_BookSummary">
+            <EntityTypeMapping TypeName="BookzillaModel.v_BookSummary">
+              <MappingFragment StoreEntitySet="v_BookSummary">
+                <ScalarProperty Name="BOOK_ID" ColumnName="BOOK_ID" />
+                <ScalarProperty Name="BOOK_TITLE" ColumnName="BOOK_TITLE" />
+                <ScalarProperty Name="AUTHOR_ID" ColumnName="AUTHOR_ID" />
+                <ScalarProperty Name="AUTHOR_DISPLAY_NAME" ColumnName="AUTHOR_DISPLAY_NAME" />
+                <ScalarProperty Name="BOOK_RELEASE_DATE" ColumnName="BOOK_RELEASE_DATE" />
+                <ScalarProperty Name="BOOK_ISBN" ColumnName="BOOK_ISBN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventories">
+            <EntityTypeMapping TypeName="BookzillaModel.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="QUANTITY_IN_STOCK" ColumnName="QUANTITY_IN_STOCK" />
+                <ScalarProperty Name="BOOK_ID" ColumnName="BOOK_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="p_BookUpdateInventory" FunctionName="BookzillaModel.Store.p_BookUpdateInventory" />
+          <FunctionImportMapping FunctionImportName="p_BookSearch" FunctionName="BookzillaModel.Store.p_BookSearch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookzillaModel.p_BookSearch_Result">
+                <ScalarProperty Name="BOOK_ID" ColumnName="BOOK_ID" />
+                <ScalarProperty Name="AUTHOR_ID" ColumnName="AUTHOR_ID" />
+                <ScalarProperty Name="AUTHOR_DISPLAY_NAME" ColumnName="AUTHOR_DISPLAY_NAME" />
+                <ScalarProperty Name="BOOK_TITLE" ColumnName="BOOK_TITLE" />
+                <ScalarProperty Name="BOOK_TOTAL_PAGES" ColumnName="BOOK_TOTAL_PAGES" />
+                <ScalarProperty Name="BOOK_RELEASE_DATE" ColumnName="BOOK_RELEASE_DATE" />
+                <ScalarProperty Name="BOOK_ISBN" ColumnName="BOOK_ISBN" />
+                <ScalarProperty Name="QUANTITY_IN_STOCK" ColumnName="QUANTITY_IN_STOCK" />
+                <ScalarProperty Name="BOOK_SUMMARY" ColumnName="BOOK_SUMMARY" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

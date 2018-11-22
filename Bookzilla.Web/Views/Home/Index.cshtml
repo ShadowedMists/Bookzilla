@@ -1,0 +1,45 @@
+﻿@model Bookzilla.Models.BookSearchModel
+
+@{
+    ViewBag.Title = "The best place for books online";
+}
+
+<div class="jumbotron">
+    <h1>The best place for books online!</h1>
+    <p class="lead">We have all the books that are in stock. No questions asked (except for your credit card number).</p>
+</div>
+
+<div class="form-inline">
+    <form method="get" style="width:100%">
+        <div class="form-group" style="flex-flow:row-reverse">
+            <label class="sr-only" for="q">Search</label>
+            <div class="input-group input-group-sm">
+                <input type="text" name="q" id="q" placeholder="Search" class="form-control form-control-sm" value="@Model.q" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-sm">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<hr />
+
+<div class="card-columns">
+    @foreach (var book in Model.Books)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@book.BOOK_TITLE</h5>
+                <p class="card-text"><small class="text-muted">by @book.AUTHOR_DISPLAY_NAME</small></p>
+                @if (!string.IsNullOrEmpty(book.BOOK_SUMMARY))
+                {
+                    <p class="card-text">@book.BOOK_SUMMARY</p>
+                }
+                <p class="card-text"><small class="text-muted">@book.QUANTITY_IN_STOCK in stock</small></p>
+            </div>
+        </div>
+    }
+</div>
