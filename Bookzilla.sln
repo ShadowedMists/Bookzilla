@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookzilla.Web", "Bookzilla.Web\Bookzilla.Web.csproj", "{D9481A08-C398-43B4-B025-356091201E08}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Bookzilla.Schema", "Bookzilla.Schema\Bookzilla.Schema.sqlproj", "{41349AEB-A7E1-4536-97B3-C95A9BE5EECC}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Bookzilla", "Bookzilla\Bookzilla.sqlproj", "{41349AEB-A7E1-4536-97B3-C95A9BE5EECC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookzilla.Database", "Bookzilla.Database\Bookzilla.Database.csproj", "{0CAFBFE4-2D60-409C-9EE3-BAE903A3659E}"
 EndProject

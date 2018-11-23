@@ -2,9 +2,10 @@
 /Bookzilla.Web/bin
 /Bookzilla.Web/obj
 /Bookzilla.Web/Bookzilla.Web.csproj.user
-/Bookzilla.Schema/Bookzilla.Schema.sqlproj.user
-/Bookzilla.Schema/obj
-/Bookzilla.Schema/bin
+/Bookzilla/Bookzilla.sqlproj.user
+/Bookzilla/obj
+/Bookzilla/bin
 /Bookzilla.Database/bin
 /Bookzilla.Database/obj
 /.vs
+/Bookzilla/Bookzilla.dbmdl
