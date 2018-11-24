@@ -78,9 +78,6 @@
     <Compile Include="Models\p_BookSearch_Result.cs">
       <DependentUpon>BookzillaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\v_BookDetail.cs">
-      <DependentUpon>BookzillaModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\v_BookSummary.cs">
       <DependentUpon>BookzillaModel.tt</DependentUpon>
     </Compile>

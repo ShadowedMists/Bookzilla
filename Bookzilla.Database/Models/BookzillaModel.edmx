@@ -32,20 +32,6 @@
           <Property Name="QUANTITY_IN_STOCK" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'Bookzilla.dbo.v_BookDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="v_BookDetail">
-          <Key>
-            <PropertyRef Name="BOOK_ID" />
-            <PropertyRef Name="BOOK_TITLE" />
-          </Key>
-          <Property Name="BOOK_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BOOK_TITLE" Type="nvarchar" MaxLength="2048" Nullable="false" />
-          <Property Name="BOOK_SUMMARY" Type="nvarchar(max)" />
-          <Property Name="BOOK_TOTAL_PAGES" Type="int" />
-          <Property Name="BOOK_RELEASE_DATE" Type="date" />
-          <Property Name="BOOK_ISBN" Type="nvarchar" MaxLength="32" />
-        </EntityType>
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'Bookzilla.dbo.v_BookSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="v_BookSummary">
           <Key>
@@ -96,16 +82,6 @@ warning 6002: The table/view 'Bookzilla.dbo.v_BookSummary' does not have a prima
           <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="v_BookDetail" EntityType="Self.v_BookDetail" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [v_BookDetail].[BOOK_ID] AS [BOOK_ID], 
-    [v_BookDetail].[BOOK_TITLE] AS [BOOK_TITLE], 
-    [v_BookDetail].[BOOK_SUMMARY] AS [BOOK_SUMMARY], 
-    [v_BookDetail].[BOOK_TOTAL_PAGES] AS [BOOK_TOTAL_PAGES], 
-    [v_BookDetail].[BOOK_RELEASE_DATE] AS [BOOK_RELEASE_DATE], 
-    [v_BookDetail].[BOOK_ISBN] AS [BOOK_ISBN]
-    FROM [dbo].[v_BookDetail] AS [v_BookDetail]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="v_BookSummary" EntityType="Self.v_BookSummary" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [v_BookSummary].[BOOK_ID] AS [BOOK_ID], 
@@ -151,18 +127,6 @@ warning 6002: The table/view 'Bookzilla.dbo.v_BookSummary' does not have a prima
           <NavigationProperty Name="Author" Relationship="Self.FK_Book_Author" FromRole="Book" ToRole="Author" />
           <NavigationProperty Name="Inventory" Relationship="BookzillaModel.FK_Inventory_Book" FromRole="Book" ToRole="Inventory" />
         </EntityType>
-        <EntityType Name="v_BookDetail">
-          <Key>
-            <PropertyRef Name="BOOK_ID" />
-            <PropertyRef Name="BOOK_TITLE" />
-          </Key>
-          <Property Name="BOOK_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BOOK_TITLE" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BOOK_SUMMARY" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BOOK_TOTAL_PAGES" Type="Int32" />
-          <Property Name="BOOK_RELEASE_DATE" Type="DateTime" Precision="0" />
-          <Property Name="BOOK_ISBN" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="v_BookSummary">
           <Key>
             <PropertyRef Name="BOOK_ID" />
@@ -192,7 +156,6 @@ warning 6002: The table/view 'Bookzilla.dbo.v_BookSummary' does not have a prima
         <EntityContainer Name="BookzillaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Authors" EntityType="Self.Author" />
           <EntitySet Name="Books" EntityType="Self.Book" />
-          <EntitySet Name="v_BookDetail" EntityType="Self.v_BookDetail" />
           <EntitySet Name="v_BookSummary" EntityType="Self.v_BookSummary" />
           <AssociationSet Name="FK_Book_Author" Association="Self.FK_Book_Author">
             <End Role="Author" EntitySet="Authors" />
@@ -208,7 +171,7 @@ warning 6002: The table/view 'Bookzilla.dbo.v_BookSummary' does not have a prima
             <Parameter Name="QUANTITY_IN_STOCK" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="p_BookSearch" ReturnType="Collection(BookzillaModel.p_BookSearch_Result)">
-            <Parameter Name="SEARCH_TEXT" Mode="In" Type="String" />
+          <Parameter Name="SEARCH_TEXT" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Inventory">
@@ -261,18 +224,6 @@ warning 6002: The table/view 'Bookzilla.dbo.v_BookSummary' does not have a prima
               <MappingFragment StoreEntitySet="Book">
                 <ScalarProperty Name="BOOK_ID" ColumnName="BOOK_ID" />
                 <ScalarProperty Name="AUTHOR_ID" ColumnName="AUTHOR_ID" />
-                <ScalarProperty Name="BOOK_TITLE" ColumnName="BOOK_TITLE" />
-                <ScalarProperty Name="BOOK_SUMMARY" ColumnName="BOOK_SUMMARY" />
-                <ScalarProperty Name="BOOK_TOTAL_PAGES" ColumnName="BOOK_TOTAL_PAGES" />
-                <ScalarProperty Name="BOOK_RELEASE_DATE" ColumnName="BOOK_RELEASE_DATE" />
-                <ScalarProperty Name="BOOK_ISBN" ColumnName="BOOK_ISBN" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="v_BookDetail">
-            <EntityTypeMapping TypeName="BookzillaModel.v_BookDetail">
-              <MappingFragment StoreEntitySet="v_BookDetail">
-                <ScalarProperty Name="BOOK_ID" ColumnName="BOOK_ID" />
                 <ScalarProperty Name="BOOK_TITLE" ColumnName="BOOK_TITLE" />
                 <ScalarProperty Name="BOOK_SUMMARY" ColumnName="BOOK_SUMMARY" />
                 <ScalarProperty Name="BOOK_TOTAL_PAGES" ColumnName="BOOK_TOTAL_PAGES" />

@@ -29,7 +29,6 @@ namespace Bookzilla.Database.Models
     
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Book> Books { get; set; }
-        public virtual DbSet<v_BookDetail> v_BookDetail { get; set; }
         public virtual DbSet<v_BookSummary> v_BookSummary { get; set; }
         public virtual DbSet<Inventory> Inventories { get; set; }
     
