@@ -12,7 +12,7 @@
         <tr>
             <th>Title</th>
             <th>Author</th>
-            <th>Release Date</th>
+            <th>Released</th>
             <th>ISBN</th>
             <th>
                 <a href="@Url.Action("Create")" class="btn btn-sm btn-secondary">
@@ -27,7 +27,7 @@
             <tr>
                 <td>@book.BOOK_TITLE</td>
                 <td>@book.AUTHOR_DISPLAY_NAME</td>
-                <td>@(book.BOOK_RELEASE_DATE.HasValue ? book.BOOK_RELEASE_DATE.Value.ToShortDateString() : null)</td>
+                <td>@(book.BOOK_RELEASE_DATE.HasValue ? book.BOOK_RELEASE_DATE.Value.Year.ToString() : null)</td>
                 <td>@book.BOOK_ISBN</td>
                 <td>
                     <div class="btn-group btn-group-sm">

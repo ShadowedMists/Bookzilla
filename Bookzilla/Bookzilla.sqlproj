@@ -72,4 +72,7 @@
     <Build Include="dbo\Stored Procedures\p_BookSearch.sql" />
     <Build Include="dbo\Stored Procedures\p_BookDelete.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment1.sql" />
+  </ItemGroup>
 </Project>

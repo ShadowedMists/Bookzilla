@@ -60,6 +60,7 @@ namespace Bookzilla.Models
         /// </summary>
         [Display(Name = "Release Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? ReleaseDate { get; set; }
 
         /// <summary>
@@ -120,6 +121,10 @@ namespace Bookzilla.Models
             this.TotalPages = book.BOOK_TOTAL_PAGES;
             this.ReleaseDate = book.BOOK_RELEASE_DATE;
             this.ISBN = book.BOOK_ISBN;
+
+            // load inventory
+            Inventory inventory = dbContext.Inventories.FirstOrDefault(x => x.BOOK_ID == book.BOOK_ID);
+            this.QuantityInStock = inventory?.QUANTITY_IN_STOCK ?? 0;
         }
 
         /// <summary>
